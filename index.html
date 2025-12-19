@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Controle de Finanças Pessoais - Gerencie suas receitas e despesas de forma simples e eficiente">
+    <title>Finanças Pessoais - Ryan Zimerman Leite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">💰 <span class="logo-text">Minhas Finanças</span></h1>
+                <p class="user-name">Ryan Zimerman Leite</p>
+            </div>
+        </header>
+
+        <!-- Balance Summary Cards -->
+        <section class="balance-section">
+            <div class="balance-card total">
+                <div class="card-icon">💵</div>
+                <div class="card-content">
+                    <p class="card-label">Saldo Total</p>
+                    <h2 class="card-value" id="total-balance">R$ 0,00</h2>
+                </div>
+            </div>
+            <div class="balance-card income">
+                <div class="card-icon">📈</div>
+                <div class="card-content">
+                    <p class="card-label">Receitas</p>
+                    <h2 class="card-value" id="total-income">R$ 0,00</h2>
+                </div>
+            </div>
+            <div class="balance-card expense">
+                <div class="card-icon">📉</div>
+                <div class="card-content">
+                    <p class="card-label">Despesas</p>
+                    <h2 class="card-value" id="total-expenses">R$ 0,00</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="main-grid">
+            <!-- Transaction Form -->
+            <section class="form-section">
+                <h2 class="section-title">Nova Transação</h2>
+                <form id="transaction-form" class="transaction-form">
+                    <div class="form-group">
+                        <label for="transaction-description">Descrição</label>
+                        <input 
+                            type="text" 
+                            id="transaction-description" 
+                            placeholder="Ex: Salário, Aluguel, Supermercado..." 
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="transaction-amount">Valor (R$)</label>
+                            <input 
+                                type="number" 
+                                id="transaction-amount" 
+                                placeholder="0,00" 
+                                step="0.01" 
+                                min="0.01"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="transaction-date">Data</label>
+                            <input 
+                                type="date" 
+                                id="transaction-date" 
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="transaction-category">Categoria</label>
+                            <select id="transaction-category" required>
+                                <option value="">Selecione...</option>
+                                <option value="Salário">Salário</option>
+                                <option value="Freelance">Freelance</option>
+                                <option value="Investimentos">Investimentos</option>
+                                <option value="Outros Ganhos">Outros Ganhos</option>
+                                <option value="Alimentação">Alimentação</option>
+                                <option value="Transporte">Transporte</option>
+                                <option value="Moradia">Moradia</option>
+                                <option value="Saúde">Saúde</option>
+                                <option value="Educação">Educação</option>
+                                <option value="Lazer">Lazer</option>
+                                <option value="Compras">Compras</option>
+                                <option value="Contas">Contas</option>
+                                <option value="Outros Gastos">Outros Gastos</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="transaction-type">Tipo</label>
+                            <select id="transaction-type" required>
+                                <option value="income">Receita</option>
+                                <option value="expense">Despesa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <span>Adicionar Transação</span>
+                        <span class="btn-icon">+</span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="chart-section">
+                <h2 class="section-title">Despesas por Categoria</h2>
+                <div class="chart-container" id="chart-container">
+                    <p class="empty-state">Adicione despesas para ver o gráfico</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Transaction History -->
+        <section class="history-section">
+            <div class="history-header">
+                <h2 class="section-title">Histórico de Transações</h2>
+                <div class="filter-controls">
+                    <select id="filter-type" class="filter-select">
+                        <option value="all">Todas</option>
+                        <option value="income">Receitas</option>
+                        <option value="expense">Despesas</option>
+                    </select>
+                    <input 
+                        type="text" 
+                        id="search-transaction" 
+                        class="search-input" 
+                        placeholder="Buscar transação..."
+                    >
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="transactions-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Categoria</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-list">
+                        <tr class="empty-row">
+                            <td colspan="6">Nenhuma transação registrada ainda</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
